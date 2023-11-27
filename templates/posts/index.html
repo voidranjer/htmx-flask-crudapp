@@ -1,0 +1,18 @@
+{% from 'posts/_macros.html' import render_comment %} {% extends 'base.html' %} {% block title %}Posts{% endblock %} {% block content %}
+<h1>Welcome to the Posts Page</h1>
+<p>This is where all posts are displayed.</p>
+
+{% for post in db['posts'] %}
+<div class="card mt-5">
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.content }}</p>
+    <a href="#" class="btn btn-primary btn-sm">Read More</a>
+    <hr />
+    <p class="card-text">
+      <small class="text-muted">Comments</small>
+      {% for comment_id in post.comments %} {{ render_comment(db,comment_id) }} {% endfor %}
+    </p>
+  </div>
+</div>
+{% endfor %} {% endblock %}

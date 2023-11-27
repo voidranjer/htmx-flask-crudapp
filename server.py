@@ -66,7 +66,7 @@ db = {
 def utility_processor():
     def static_url(filename):
         return url_for('static', filename=filename)
-    return dict(static_url=static_url)
+    return dict(static_url=static_url, db=db)
 
 @app.route("/")
 def home():
@@ -75,4 +75,4 @@ def home():
 
 @app.route("/posts")
 def posts():
-    return render_template('posts.html')
+    return render_template('posts/index.html')
