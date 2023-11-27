@@ -1,4 +1,4 @@
-{% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %}
+{# {% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %} #}
 <div hx-target="this" hx-swap="outerHTML">
   <h5 class="card-title">{{ post.title }}</h5>
     <p class="card-text">{{ post.content }}</p>

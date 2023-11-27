@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, abort
 
 app = Flask(__name__)
 
@@ -49,10 +49,28 @@ db = {'users': [{
   'text': 'Nice one, John.',
   }]}
 
-def get_post(id):
+def post_exists(raw_id):
+  if (not raw_id):
+    return False
+  post_id = int(raw_id)
   for post in db['posts']:
-    if post['id'] == id:
+    if post['id'] == post_id:
+      return True
+  return False
+
+def get_post(raw_id):
+  post_id = int(raw_id)
+  for post in db['posts']:
+    if post['id'] == post_id:
       return post
+
+def delete_post(raw_id):
+  post_id = int(raw_id)
+  for post in db['posts']:
+    if post['id'] == post_id:
+      db['posts'].remove(post)
+      return True
+  return False
 
 @app.context_processor
 def utility_processor():
@@ -75,29 +93,48 @@ def home():
 @app.route('/posts')
 def posts():
   if request.method == "GET":
-    post_id = request.args.get('id')
-    if post_id:
-      return render_template('posts/_show.html', post_id=post_id)
-    else:
+    raw_id = request.args.get('id')
+
+    if (not raw_id):
       return render_template('posts/index.html')
+
+    if not post_exists(raw_id):
+      abort(404)
+    post = get_post(raw_id)
+    return render_template('posts/_show.html', post=post)
 
 @app.route('/new-post')
 def new_post():
   return render_template('index.html')
 
 
-@app.route('/edit-post', methods=['GET', 'PUT'])
+@app.route('/edit-post', methods=['GET', 'PUT', 'DELETE', 'VIEW'])
 def edit_post():
+  raw_id = request.args.get('id')
+
+  if not post_exists(raw_id):
+    abort(404)
+
+  post = get_post(raw_id)
+
   if request.method == "GET":
-    return render_template('posts/_edit.html', post_id=request.args.get('id'))
+    return render_template('posts/_edit.html', post=post)
 
   elif request.method == "PUT":
-    post_id = request.form.get('id')
     title = request.form.get('title')
     content = request.form.get('content')
     
-    post = get_post(int(post_id))
+    post = get_post(raw_id)
     post['title'] = title
     post['content'] = content
 
-    return render_template('posts/_show.html', post_id=post_id)
+    return render_template('posts/_show.html', post=post)
+
+  elif request.method == "DELETE":
+    delete_post(raw_id)
+    return "Post deleted successfully"
+
+# Custom error handler for 404 errors
+@app.errorhandler(404)
+def page_not_found(error):
+    return '404 Not Found', 404

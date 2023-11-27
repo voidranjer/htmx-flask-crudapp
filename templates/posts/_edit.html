@@ -1,8 +1,12 @@
-{% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %}
+{# {% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %} #}
 <form class="children-mb-1" hx-target="this" hx-swap="outerHTML" hx-put="{{ url_for('edit_post') }}">
   <input type="hidden" name="id" value="{{post.id}}" />
   <input value="{{post.title}}" type="text" class="form-control fs-3" name="title"/>
   <input value="{{post.content}}" type="text" class="form-control fs-6" name="content"/>
-  <button type="submit" class="btn btn-success btn-sm">Submit</button>
-  <button hx-get="{{ url_for('posts', id=post.id) }}" class="btn btn-danger btn-sm">Cancel</button>
+
+  <div class="w-100 d-flex">
+      <button type="submit" class="btn btn-success btn-sm">Submit</button>
+      <button hx-get="{{ url_for('posts', id=post.id) }}" class="btn btn-danger btn-sm ms-1">Cancel</button>
+      <button hx-delete="{{ url_for('edit_post', id=post.id) }}" class="btn btn-warning btn-sm ms-auto">Delete Post</button>
+  </div>
 </form>

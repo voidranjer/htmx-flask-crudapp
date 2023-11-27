@@ -15,3 +15,5 @@
 13. Complete functionality and API route for "Cancel" button in Edit Post form
 
 14. Complete functionality and API route for "Edit Post" > "Submit".
+
+15. Partially complete functionality for "Delete Post" (pending delete confirmation and replace original card html)
