@@ -1,0 +1,12 @@
+doctype html
+html(lang="en")
+  head
+    include partials/head.pug
+  body(onload="init()")
+    include partials/navbar.pug
+    h1 Posts
+    ul
+      each post in posts
+        li
+          a(href="/posts/" + post.id)= post.title
+    script(src="/js/script.js")
