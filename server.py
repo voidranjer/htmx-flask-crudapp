@@ -66,11 +66,7 @@ def get_post(raw_id):
 
 def delete_post(raw_id):
   post_id = int(raw_id)
-  for post in db['posts']:
-    if post['id'] == post_id:
-      db['posts'].remove(post)
-      return True
-  return False
+  db['posts'] = [ post for post in db['posts'] if post['id'] != post_id ]
 
 @app.context_processor
 def utility_processor():
@@ -110,7 +106,7 @@ def new_post():
 
 @app.route('/edit-post', methods=['GET', 'PUT', 'DELETE', 'VIEW'])
 def edit_post():
-  raw_id = request.args.get('id')
+  raw_id = request.args.get('id') or request.form.get('id')
 
   if not post_exists(raw_id):
     abort(404)
@@ -132,7 +128,7 @@ def edit_post():
 
   elif request.method == "DELETE":
     delete_post(raw_id)
-    return "Post deleted successfully"
+    return "<p class='text-danger'>Post deleted successfully</p>"
 
 # Custom error handler for 404 errors
 @app.errorhandler(404)

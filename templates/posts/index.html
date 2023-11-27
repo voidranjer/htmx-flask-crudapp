@@ -19,10 +19,10 @@
           <h5 class="card-title">{{ post.title }}</h5>
           <p class="card-text">{{ post.content }}</p>
           <button class="btn btn-primary btn-sm" hx-get="{{ url_for('edit_post', id=post.id) }}">Edit Post</button>
-        </div>
-        <hr />
+          <hr />
           <small class="text-muted">Comments</small>
           {% for comment_id in post.comments %} {{ render_comment(db,comment_id) }} {% endfor %}
+        </div>
       </div>
     </div>
   {% endfor %}
