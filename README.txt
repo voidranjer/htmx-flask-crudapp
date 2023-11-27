@@ -13,3 +13,5 @@
 11. Install HTMX and make `edit_post` route.
 12. "Edit Post" buttons should update post contents to a form
 13. Complete functionality and API route for "Cancel" button in Edit Post form
+
+14. Complete functionality and API route for "Edit Post" > "Submit".

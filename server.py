@@ -49,6 +49,10 @@ db = {'users': [{
   'text': 'Nice one, John.',
   }]}
 
+def get_post(id):
+  for post in db['posts']:
+    if post['id'] == id:
+      return post
 
 @app.context_processor
 def utility_processor():
@@ -70,18 +74,30 @@ def home():
 
 @app.route('/posts')
 def posts():
-  post_id = request.args.get('id')
-  if post_id:
-    return render_template('posts/_show.html', post_id=post_id)
-  else:
-    return render_template('posts/index.html')
-
+  if request.method == "GET":
+    post_id = request.args.get('id')
+    if post_id:
+      return render_template('posts/_show.html', post_id=post_id)
+    else:
+      return render_template('posts/index.html')
 
 @app.route('/new-post')
 def new_post():
   return render_template('index.html')
 
 
-@app.route('/edit-post')
+@app.route('/edit-post', methods=['GET', 'PUT'])
 def edit_post():
-  return render_template('posts/_edit.html', post_id=request.args.get('id'))
+  if request.method == "GET":
+    return render_template('posts/_edit.html', post_id=request.args.get('id'))
+
+  elif request.method == "PUT":
+    post_id = request.form.get('id')
+    title = request.form.get('title')
+    content = request.form.get('content')
+    
+    post = get_post(int(post_id))
+    post['title'] = title
+    post['content'] = content
+
+    return render_template('posts/_show.html', post_id=post_id)
