@@ -1,4 +1,8 @@
-{
+from flask import Flask, render_template, url_for
+
+app = Flask(__name__)
+
+db = {
   "users": [
     {
       "id": 1,
@@ -57,3 +61,18 @@
     }
   ]
 }
+
+@app.context_processor
+def utility_processor():
+    def static_url(filename):
+        return url_for('static', filename=filename)
+    return dict(static_url=static_url)
+
+@app.route("/")
+def home():
+    urls = {'favicon': url_for('static', filename='favicon.ico')}
+    return render_template('index.html', urls=urls)
+
+@app.route("/posts")
+def posts():
+    return render_template('posts.html')
