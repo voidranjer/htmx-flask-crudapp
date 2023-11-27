@@ -4,19 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{{ static_url('favicon.ico') }}" type="image/x-icon" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    {% block styles %}<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />{% endblock %}
     <title>{% block title %}FlaskX Social Media{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
   </head>
   <body>
     {% block navbar %}
-    <nav class="navbar bg-primary-subtle">
+    <nav class="navbar bg-primary-subtle navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('home') }}">FlaskX</a>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link {{ nav_active('posts') }}" aria-current="page" href="{{ url_for('posts') }}"">Posts</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link {{ nav_active('posts') }}" aria-current="page" href="{{ url_for('posts') }}">Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ nav_active('new_post') }}" aria-current="page" href="{{ url_for('new_post') }}">New Post</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     {% endblock %}

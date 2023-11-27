@@ -1,0 +1,7 @@
+{% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %}
+<form class="children-mb-1">
+  <input value="{{post.title}}" type="text" class="form-control fs-3" />
+  <input value="{{post.content}}" type="text" class="form-control fs-6" />
+  <button type="submit" class="btn btn-success btn-sm">Submit</button>
+  <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+</form>

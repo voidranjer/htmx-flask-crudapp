@@ -1,8 +1,4 @@
-{% macro render_comment(db, comment_id) %} {% set comment = db['comments'] | selectattr("id", "==", comment_id) | list | first %}
-<!-- <div class="card mt-3">
-  <div class="card-body">
-    <p class="card-text">{{ comment.text }}</p>
-  </div>
-</div> -->
-<p class="fs-6 mb-0">{{comment.text}}</p>
+{% macro render_comment(db, comment_id) %}
+  {% set comment = db['comments'] | selectattr("id", "==", comment_id) | list | first %}
+  <p class="fs-6 mb-0">{{comment.text}}</p>
 {% endmacro %}

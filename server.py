@@ -80,3 +80,11 @@ def home():
 @app.route("/posts")
 def posts():
     return render_template('posts/index.html')
+
+@app.route("/new-post")
+def new_post():
+    return render_template('index.html')
+
+@app.route("/edit-post")
+def edit_post():
+    return render_template('posts/_edit.html', post_id=request.args.get('id'))
