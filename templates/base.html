@@ -11,7 +11,12 @@
     {% block navbar %}
     <nav class="navbar bg-primary-subtle">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">FlaskX</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}">FlaskX</a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {{ nav_active('posts') }}" aria-current="page" href="{{ url_for('posts') }}"">Posts</a>
+          </li>
+        </ul>
       </div>
     </nav>
     {% endblock %}

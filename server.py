@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 
 app = Flask(__name__)
 
@@ -66,7 +66,11 @@ db = {
 def utility_processor():
     def static_url(filename):
         return url_for('static', filename=filename)
-    return dict(static_url=static_url, db=db)
+
+    def nav_active(endpoint):
+      return "active" if request.endpoint == endpoint else ""
+
+    return dict(static_url=static_url, db=db, nav_active=nav_active)
 
 @app.route("/")
 def home():
