@@ -18,6 +18,7 @@
 
 15. Partially complete functionality for "Delete Post" (pending delete confirmation)
 
+16. New Post functionality
 
 Todo:
 - Flask Auth (with Protected Routes, sessions, etc)

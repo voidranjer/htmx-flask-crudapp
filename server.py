@@ -86,7 +86,7 @@ def home():
   return render_template('index.html', urls=urls)
 
 
-@app.route('/posts')
+@app.route('/posts', methods=['GET', 'POST'])
 def posts():
   if request.method == "GET":
     raw_id = request.args.get('id')
@@ -97,6 +97,20 @@ def posts():
     if not post_exists(raw_id):
       abort(404)
     post = get_post(raw_id)
+    return render_template('posts/_show.html', post=post)
+
+  elif request.method == "POST":
+    title = request.form.get('title')
+    content = request.form.get('content')
+    post_id = len(db['posts']) + 1
+    post = {
+      'id': post_id,
+      'userId': 1,
+      'title': title,
+      'content': content,
+      'comments': [],
+    }
+    db['posts'].insert(0, post)
     return render_template('posts/_show.html', post=post)
 
 @app.route('/new-post')

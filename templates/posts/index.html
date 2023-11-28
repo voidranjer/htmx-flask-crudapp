@@ -12,6 +12,12 @@
   <h1>Welcome to the Posts Page</h1>
   <p>This is where all posts are displayed.</p>
 
+  <form hx-post="{{ url_for('posts') }}" class="children-mb-1" hx-target="next .card" hx-swap="beforebegin">
+    <input type="text" name="title" placeholder="Title" class="form-control"/>
+    <textarea name="content" placeholder="Content" class="form-control"></textarea>
+    <input type="submit" value="New Post" class="btn btn-secondary" />
+  </form>
+
   {% for post in db['posts'] %}
     <div hx-target="this" hx-swap="innerHTML">
       <div hx-trigger="load" hx-get="{{ url_for('posts', id=post.id) }}"></div>
