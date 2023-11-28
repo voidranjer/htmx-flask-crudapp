@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, url_for, request, abort
+from random import randint
 
 app = Flask(__name__)
 
@@ -104,19 +105,18 @@ def edit_post():
   raw_id = request.args.get('id') or request.form.get('id')
 
   # Should only run for non-POST requests
-  post = {}
   if request.method != "POST":
     if not post_exists(raw_id):
       abort(404)
-    post = get_post(raw_id)
 
   if request.method == "GET":
+    post = get_post(raw_id)
     return render_template('posts/_edit.html', post=post)
 
   elif request.method == "POST":
     title = request.form.get('title')
     content = request.form.get('content')
-    post_id = len(db['posts']) + 1
+    post_id = randint(1000, 9999)
     post = {
       'id': post_id,
       'userId': 1,
