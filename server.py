@@ -103,10 +103,12 @@ def show_post():
 def edit_post():
   raw_id = request.args.get('id') or request.form.get('id')
 
-  if not post_exists(raw_id):
-    abort(404)
-
-  post = get_post(raw_id)
+  # Should only run for non-POST requests
+  post = {}
+  if request.method != "POST":
+    if not post_exists(raw_id):
+      abort(404)
+    post = get_post(raw_id)
 
   if request.method == "GET":
     return render_template('posts/_edit.html', post=post)

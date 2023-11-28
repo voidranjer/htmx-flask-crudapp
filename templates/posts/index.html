@@ -15,15 +15,15 @@
   <h1>Welcome to the Posts Page</h1>
   <p>This is where all posts are displayed.</p>
 
-  <form hx-post="{{ url_for('posts') }}" class="children-mb-1" hx-target="next .card" hx-swap="beforebegin">
+  <form hx-post="{{ url_for('edit_post') }}" class="children-mb-1" hx-target="#new-posts-insert" hx-swap="afterend">
     <input type="text" name="title" placeholder="Title" class="form-control"/>
     <textarea name="content" placeholder="Content" class="form-control"></textarea>
     <input type="submit" value="New Post" class="btn btn-secondary" />
   </form>
 
+  <div id="new-posts-insert"></div>
+
   {% for post in db['posts'] %}
-    <div hx-target="this" hx-swap="innerHTML">
-      <div hx-trigger="load" hx-get="{{ url_for('show_post', id=post.id) }}"></div>
-    </div>
+    <div hx-trigger="load" hx-target="this" hx-swap="outerHTML" hx-get="{{ url_for('show_post', id=post.id) }}"></div>
   {% endfor %}
 {% endblock %}
