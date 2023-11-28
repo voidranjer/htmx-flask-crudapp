@@ -1,12 +1,15 @@
-{# {% set post = db['posts'] | selectattr("id", "==", post_id|int) | list | first %} #}
-<form class="children-mb-1" hx-put="{{ url_for('edit_post') }}" hx-target="closest .hx-post-container" hx-swap="outerHTML">
-  <input type="hidden" name="id" value="{{post.id}}" />
-  <input value="{{post.title}}" type="text" class="form-control fs-3" name="title"/>
-  <input value="{{post.content}}" type="text" class="form-control fs-6" name="content"/>
+<div class="card mt-5" hx-target="this" hx-swap="outerHTML">
+  <div class="card-body">
+    <form class="children-mb-1" hx-put="{{ url_for('edit_post') }}">
+      <input type="hidden" name="id" value="{{post.id}}" />
+      <input value="{{post.title}}" type="text" class="form-control fs-4" name="title"/>
+      <input value="{{post.content}}" type="text" class="form-control fs-6" name="content"/>
 
-  <div class="w-100 d-flex">
-      <button type="submit" class="btn btn-success btn-sm">Submit</button>
-      <button hx-get="{{ url_for('show_post', id=post.id) }}" class="btn btn-danger btn-sm ms-1">Cancel</button>
-      <button hx-confirm="Confirm delete?" hx-swap="delete swap:1s" hx-delete="{{ url_for('edit_post', id=post.id) }}" class="btn btn-warning btn-sm ms-auto">Delete Post</button>
+      <div class="w-100 d-flex">
+          <button type="submit" class="btn btn-success btn-sm">Submit</button>
+          <button hx-get="{{ url_for('show_post', id=post.id) }}" class="btn btn-danger btn-sm ms-1">Cancel</button>
+          <button hx-confirm="Confirm delete?" hx-swap="delete swap:1s" hx-delete="{{ url_for('edit_post', id=post.id) }}" class="btn btn-warning btn-sm ms-auto">Delete Post</button>
+      </div>
+    </form>
   </div>
-</form>
+</div>

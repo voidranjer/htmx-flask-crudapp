@@ -1,13 +1,4 @@
-{% from 'posts/_macros.html' import render_comment %}
-
 {% extends 'base.html' %}
-
-{# 
-{%block styles %}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ static_url('css/posts.css') }}" />
-{% endblock %}
-#}
 
 {% block title %}Posts{% endblock %}
 
@@ -15,8 +6,8 @@
   <h1>Welcome to the Posts Page</h1>
   <p>This is where all posts are displayed.</p>
 
-  <form hx-post="{{ url_for('edit_post') }}" class="children-mb-1" hx-target="#new-posts-insert" hx-swap="afterend">
-    <input type="text" name="title" placeholder="Title" class="form-control"/>
+  <form hx-post="{{ url_for('edit_post') }}" class="children-mb-1" hx-target="#new-posts-insert" hx-swap="afterend" hx-on="resetForm: this.reset()">
+    <input type="text" name="title" placeholder="Title" class="form-control" autocomplete="off"/>
     <textarea name="content" placeholder="Content" class="form-control"></textarea>
     <input type="submit" value="New Post" class="btn btn-secondary" />
   </form>

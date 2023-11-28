@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, url_for, request, abort
+from flask import Flask, render_template, url_for, request, abort, Response
 from random import randint
 
 app = Flask(__name__)
@@ -83,7 +83,7 @@ def utility_processor():
 
 @app.route('/')
 def home():
-  return render_template('index.html')
+  return render_template('home/index.html')
 
 
 @app.route('/posts', methods=['GET'])
@@ -93,14 +93,14 @@ def posts():
   if (not raw_id):
     return render_template('posts/index.html')
 
-@app.route('/show-post', methods=['GET'])
+@app.route('/posts/show', methods=['GET'])
 def show_post():
   raw_id = request.args.get('id')
   if not post_exists(raw_id):
     abort(404)
   return render_template('posts/_show.html', post=get_post(raw_id))
 
-@app.route('/edit-post', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/posts/edit', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def edit_post():
   raw_id = request.args.get('id') or request.form.get('id')
 
@@ -125,7 +125,11 @@ def edit_post():
       'comments': [],
     }
     db['posts'].insert(0, post)
-    return render_template('posts/_show.html', post=post)
+    
+    resp = Response(render_template('posts/_show.html', post=post))
+    resp.headers['HX-Trigger'] = "resetForm"
+
+    return resp
 
   elif request.method == "PUT":
     title = request.form.get('title')
@@ -142,9 +146,9 @@ def edit_post():
     return ""
     # return "<p class='text-danger'>Post deleted successfully</p>"
 
-@app.route('/new-post')
+@app.route('/posts/new')
 def new_post():
-  return render_template('index.html')
+  return render_template('home/index.html')
 
 # Custom error handler for 404 errors
 @app.errorhandler(404)

@@ -19,9 +19,18 @@
 15. Partially complete functionality for "Delete Post" (pending delete confirmation)
 
 16. New Post functionality
+17. HX-Trigger headers: Reset new form after submit
 
 Todo:
 - MongoDB
 - Flask Auth (with Protected Routes, sessions, etc)
 - Flask Blueprints
 - Flask forms?
+
+Snippets:
+```
+{% macro render_comment(db, comment_id) %}
+  {% set comment = db['comments'] | selectattr("id", "==", comment_id) | list | first %}
+  <p class="fs-6 mb-0">{{comment.text}}</p>
+{% endmacro %}
+```
