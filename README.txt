@@ -21,6 +21,7 @@
 16. New Post functionality
 
 Todo:
+- MongoDB
 - Flask Auth (with Protected Routes, sessions, etc)
 - Flask Blueprints
 - Flask forms?
