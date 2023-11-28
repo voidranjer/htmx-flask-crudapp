@@ -7,7 +7,7 @@
   <p>This is where all posts are displayed.</p>
 
   <form hx-post="{{ url_for('edit_post') }}" class="children-mb-1" hx-target="#new-posts-insert" hx-swap="afterend" hx-on="resetForm: this.reset()">
-    <input type="text" name="title" placeholder="Title" class="form-control" autocomplete="off"/>
+    <input type="text" name="title" placeholder="Title" class="form-control" autocomplete="off" hx-post="{{ url_for('validate_new_post') }}" hx-target="this" hx-swap="outerHTML"/>
     <textarea name="content" placeholder="Content" class="form-control"></textarea>
     <input type="submit" value="New Post" class="btn btn-secondary" />
   </form>
