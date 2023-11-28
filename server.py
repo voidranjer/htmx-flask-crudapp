@@ -82,22 +82,34 @@ def utility_processor():
 
 @app.route('/')
 def home():
-  urls = {'favicon': url_for('static', filename='favicon.ico')}
-  return render_template('index.html', urls=urls)
+  return render_template('index.html')
 
 
-@app.route('/posts', methods=['GET', 'POST'])
+@app.route('/posts', methods=['GET'])
 def posts():
+  raw_id = request.args.get('id')
+
+  if (not raw_id):
+    return render_template('posts/index.html')
+
+@app.route('/show-post', methods=['GET'])
+def show_post():
+  raw_id = request.args.get('id')
+  if not post_exists(raw_id):
+    abort(404)
+  return render_template('posts/_show.html', post=get_post(raw_id))
+
+@app.route('/edit-post', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def edit_post():
+  raw_id = request.args.get('id') or request.form.get('id')
+
+  if not post_exists(raw_id):
+    abort(404)
+
+  post = get_post(raw_id)
+
   if request.method == "GET":
-    raw_id = request.args.get('id')
-
-    if (not raw_id):
-      return render_template('posts/index.html')
-
-    if not post_exists(raw_id):
-      abort(404)
-    post = get_post(raw_id)
-    return render_template('posts/_show.html', post=post)
+    return render_template('posts/_edit.html', post=post)
 
   elif request.method == "POST":
     title = request.form.get('title')
@@ -113,23 +125,6 @@ def posts():
     db['posts'].insert(0, post)
     return render_template('posts/_show.html', post=post)
 
-@app.route('/new-post')
-def new_post():
-  return render_template('index.html')
-
-
-@app.route('/edit-post', methods=['GET', 'PUT', 'DELETE', 'VIEW'])
-def edit_post():
-  raw_id = request.args.get('id') or request.form.get('id')
-
-  if not post_exists(raw_id):
-    abort(404)
-
-  post = get_post(raw_id)
-
-  if request.method == "GET":
-    return render_template('posts/_edit.html', post=post)
-
   elif request.method == "PUT":
     title = request.form.get('title')
     content = request.form.get('content')
@@ -144,6 +139,10 @@ def edit_post():
     delete_post(raw_id)
     return ""
     # return "<p class='text-danger'>Post deleted successfully</p>"
+
+@app.route('/new-post')
+def new_post():
+  return render_template('index.html')
 
 # Custom error handler for 404 errors
 @app.errorhandler(404)

@@ -23,7 +23,7 @@
 
   {% for post in db['posts'] %}
     <div hx-target="this" hx-swap="innerHTML">
-      <div hx-trigger="load" hx-get="{{ url_for('posts', id=post.id) }}"></div>
+      <div hx-trigger="load" hx-get="{{ url_for('show_post', id=post.id) }}"></div>
     </div>
   {% endfor %}
 {% endblock %}
