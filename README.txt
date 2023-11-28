@@ -20,6 +20,7 @@
 
 16. New Post functionality
 17. HX-Trigger headers: Reset new form after submit
+18. Inline validation
 
 Todo:
 - MongoDB
