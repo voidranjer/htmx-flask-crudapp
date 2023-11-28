@@ -128,7 +128,8 @@ def edit_post():
 
   elif request.method == "DELETE":
     delete_post(raw_id)
-    return "<p class='text-danger'>Post deleted successfully</p>"
+    return ""
+    # return "<p class='text-danger'>Post deleted successfully</p>"
 
 # Custom error handler for 404 errors
 @app.errorhandler(404)

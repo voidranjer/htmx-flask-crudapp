@@ -17,3 +17,9 @@
 14. Complete functionality and API route for "Edit Post" > "Submit".
 
 15. Partially complete functionality for "Delete Post" (pending delete confirmation)
+
+
+Todo:
+- Flask Auth (with Protected Routes, sessions, etc)
+- Flask Blueprints
+- Flask forms?

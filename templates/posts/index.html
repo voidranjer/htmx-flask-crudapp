@@ -13,17 +13,8 @@
   <p>This is where all posts are displayed.</p>
 
   {% for post in db['posts'] %}
-    <div class="card mt-5">
-      <div class="card-body">
-        <div hx-target="this" hx-swap="outerHTML">
-          <h5 class="card-title">{{ post.title }}</h5>
-          <p class="card-text">{{ post.content }}</p>
-          <button class="btn btn-primary btn-sm" hx-get="{{ url_for('edit_post', id=post.id) }}">Edit Post</button>
-          <hr />
-          <small class="text-muted">Comments</small>
-          {% for comment_id in post.comments %} {{ render_comment(db,comment_id) }} {% endfor %}
-        </div>
-      </div>
+    <div hx-target="this" hx-swap="innerHTML">
+      <div hx-trigger="load" hx-get="{{ url_for('posts', id=post.id) }}"></div>
     </div>
   {% endfor %}
 {% endblock %}
