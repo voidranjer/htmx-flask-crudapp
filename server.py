@@ -129,10 +129,10 @@ def edit_post():
     # return "<p class='text-danger'>Post deleted successfully</p>"
 
 @app.route('/posts/new/validate', methods=['POST'])
-def validate_new_post():
+def validate_post_title():  
   title = request.form.get('title')
   error = 'Can\'t have digits in the title!' if any(char.isdigit() for char in title) else None
-  return render_template('posts/_validate.html', title=title, error=error)
+  return render_template('posts/_validateTitle.html', title=title, error=error)
 
 @app.route('/posts/new')
 def new_post():
