@@ -2,5 +2,5 @@
   <input type="text" name="title" placeholder="Title" class="form-control {{ 'mb-1 border border-danger' if error else '' }}" autocomplete="off" hx-post="{{ url_for('validate_post') }}" value="{{ title }}" hx-on="resetForm: this.value = ''" />
   {% if error %}
     <p class="text-danger">{{ error }}</p>
-    {% endif %}
+  {% endif %}
 </div>
