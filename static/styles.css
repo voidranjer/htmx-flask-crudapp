@@ -6,7 +6,3 @@
   opacity: 0;
   transition: opacity 1s ease-out;
 }
-
-body {
-  margin-bottom: 5rem;
-}

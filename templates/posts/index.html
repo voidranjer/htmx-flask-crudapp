@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Posts</h1>
+
+{% for post in posts %}
+<div hx-get="{{ url_for('show_post', post_id=post.id) }}"
+    hx-trigger="load"
+    hx-swap="outerHTML"
+>
+</div>
+{% endfor %}
+
+{% endblock %}
